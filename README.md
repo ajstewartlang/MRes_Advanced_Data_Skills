@@ -21,4 +21,4 @@ Week 8 - General Linear Model - ANOVA <br>
 Week 9 - General Linear Model - ANOVA <br>
 Week 10 - Tidy Thursday Data Wrangling & Visualisation Challenge <br>
 Week 11 - Reproducing your Computational Environment using Binder <br>
-Week 12 - Dynamic, Reproducible Presentations Using xaringan <br>
+Week 12 - Dynamic, Reproducible Presentations Using `xaringan` <br>
