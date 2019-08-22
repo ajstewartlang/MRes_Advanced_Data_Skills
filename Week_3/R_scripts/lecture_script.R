@@ -153,7 +153,7 @@ my_plot <- data_long %>%
        y = "Reaction Time (ms.)") +
   theme_economist()
   
-ggsave("my_plot.png", my_plot, height = 3, width = 5, units = "cm")
+ggsave("my_plot.png", my_plot, height = 8, width = 15, units = "cm")
 
 
 
