@@ -28,7 +28,6 @@ select(starwars, name)
 # below.
 # The tally() function tells us how many elements are
 starwars %>% 
-  select(name) %>%
   tally()
 
 # This displays just the column called "homeworld" in the dataset - you'll see 
@@ -42,12 +41,10 @@ starwars %>%
   select(homeworld) %>%
   distinct()
 
-# The following combines the distinct and tally functions to return the number 
-# of unique homeworlds
+# The following uses the n_distinct to return the number of unique homeworlds
 starwars %>%
   select(homeworld) %>%
-  distinct() %>%
-  tally()
+  n_distinct() 
 
 # The following displays just the column called "height" in the dataset
 # Notice again that missing values are labelled as "NA"
