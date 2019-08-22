@@ -1,6 +1,6 @@
 # MRes Advanced Data Skills
  
-![](https://icon-library.net/images/email-icon-for-business-card/email-icon-for-business-card-25.jpg =25x)_Andrew.Stewart@manchester.ac.uk_ <br>
+![](https://icon-library.net/images/email-icon-for-business-card/email-icon-for-business-card-25.jpg =250x)_Andrew.Stewart@manchester.ac.uk_ <br>
 Twitter: _@ajstewart_lang_
 
 Slides for my 2019/20 MRes Data Skills unit.  Click on the __'Clone or download'__ button in the top right to download a zipped version of this repository.
