@@ -64,14 +64,14 @@ And 10,000 rows.  If we use the function `head()` we can see the first few rows 
 head(NHANES)
 ```
 
-It looks like some participants appear more than once in the dataset - the first few rows are all for participant ID 51624 - so looks like there is duplicate data. We can use the `select()` function alongwith the `distinct()` and `tally()` functions to tell us the unique number of IDs in the dataset. 
+It looks like some participants appear more than once in the dataset - the first few rows are all for participant ID 51624 - so looks like there is duplicate data. We can use the `select()` function alongwith the `n_distinct()` function to tell us the unique number of IDs in the dataset. 
 
 ```{r}
-NHANES %>%
-  select(ID) %>%
-  distinct(ID) %>%
-  tally()
+NHANES %>% 
+  select(ID) %>% 
+  n_distinct()
 ```
+
 
 We see we have 6,779 unique individuals.  Let's tidy our data to remove duplicate IDs. Note that below we're using the pipe operator `%>%`  You can read it as 'and then' so it means we're taking the NHANES dataset and then filtering it keep just rows with distinct ID numbers.  The pipe operator really helps with the readability of your data wrangling code and is an integral part of the tidyverse philosophy - tidy data and tidy code.
 
