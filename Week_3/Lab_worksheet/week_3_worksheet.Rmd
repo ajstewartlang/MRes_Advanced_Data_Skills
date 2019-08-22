@@ -1,6 +1,5 @@
 ---
 title: "Week 3 Worksheet"
-author: "Andrew Stewart"
 output: html_document
 editor_options: 
   chunk_output_type: console
@@ -34,7 +33,7 @@ install.packages("NHANES")
 
 You only ever have to do this installation once - unless you update R.  Packages themselves update regularly - the easiest way to check whether you're running the most up to date versions is by clicking on "Packages"" in the right hand pane - then click on "Update".  This will give you the option to update individual packages, or all of them.
 
-To being with, you need to select a new R Script under the File -> New File menu option (see below). You're going to write all of the following R coded in that script window.
+To begin with, you need to select a new R Script under the File -> New File menu option (see below). You're going to write all of the following R coded in that script window.
 <br>
 <br>
 ![](image3.png) 
@@ -65,10 +64,13 @@ And 10,000 rows.  If we use the function `head()` we can see the first few rows 
 head(NHANES)
 ```
 
-It looks like some participants appear more than once in the dataset - the first few rows are all for participant ID 51624 - so looks like there is duplicate data. We can use the `unique()` function alongwith the `length()` function to tell us the unique number of IDs in the dataset. We use the symbol $ to refer to a pariciular column in our data.  So, `NHANES$ID` refers to the column "ID" in the dataset NHANES.
+It looks like some participants appear more than once in the dataset - the first few rows are all for participant ID 51624 - so looks like there is duplicate data. We can use the `select()` function alongwith the `distinct()` and `tally()` functions to tell us the unique number of IDs in the dataset. 
 
 ```{r}
-length(unique(NHANES$ID))
+NHANES %>%
+  select(ID) %>%
+  distinct(ID) %>%
+  tally()
 ```
 
 We see we have 6,779 unique individuals.  Let's tidy our data to remove duplicate IDs. Note that below we're using the pipe operator `%>%`  You can read it as 'and then' so it means we're taking the NHANES dataset and then filtering it keep just rows with distinct ID numbers.  The pipe operator really helps with the readability of your data wrangling code and is an integral part of the tidyverse philosophy - tidy data and tidy code.
@@ -103,7 +105,7 @@ NHANES_tidied %>%
   summarise(median = median(BMI, na.rm = TRUE))
 ```
 
-So it looks like those with College eduction have the lowest median BMI (ignoring the NA category which corresponds cases where we don't have Eduction level recorded).  
+So it looks like those with College eduction have the lowest median BMI (ignoring the NA category which corresponds to cases where we don't have Education level recorded).  
 
 Let's graph it!  Note here we're filtering out cases where we don't have BMI value recorded.  The function `is.na()` returns TRUE when applied to a case of missing data (NA) - we use the `!` operator to negate this and combine several of these expressions together using the logical AND operator `&`. 
 
@@ -122,8 +124,9 @@ NHANES_tidied %>%
   geom_jitter(alpha = .2, width = .1) +
   geom_boxplot(alpha = .5) +
   guides(colour = FALSE) + 
-  labs(x = "Education Level", y = "BMI", title = "Examining the effect of education level on median BMI")
-
+  labs(title = "Examining the effect of education level on median BMI", 
+       x = "Education Level", 
+       y = "BMI")
 ```
 
 We can also plot histograms of BMI separately for each Education level - we use the `facet_wrap()` function to do this.
@@ -135,8 +138,9 @@ NHANES_tidied %>%
   ggplot(aes(x = BMI, fill = Education)) +
   geom_histogram() +
   guides(fill = FALSE) + 
-  labs(x = "BMI", y = "Number of cases", 
-       title = "Examining the effect of education level on BMI") + 
+  labs(title = "Examining the effect of education level on BMI",
+       x = "BMI", 
+       y = "Number of cases") + 
   facet_wrap(~ Education)
 ```
 
@@ -150,10 +154,11 @@ NHANES_tidied %>%
   group_by(Education) %>% 
   ggplot(aes(x = BMI, fill = Education)) +
   geom_histogram(aes(y = ..density..)) +
-  geom_density(aes(y=..density..)) +
+  geom_density(aes(y = ..density..)) +
   guides(fill = FALSE) + 
-  labs(x = "BMI", y = "Density", 
-       title = "Examining the effect of education level on BMI") + 
+  labs( title = "Examining the effect of education level on BMI", 
+        x = "BMI", 
+        y = "Density") + 
   facet_wrap(~ Education)
 ```
 
@@ -201,13 +206,15 @@ Again I am adding a `geom_boxplot()` layer to create a box plot for each combina
 ```{r, warning=FALSE}
 NHANES_tidied %>% 
   filter(!is.na(Education) & !is.na(Work) & !is.na(BMI)) %>%
-  ggplot(aes(x = fct_reorder(Education:Work, BMI, median), y = BMI, 
-              colour = Education:Work)) + 
+  ggplot(aes(x = fct_reorder(Education:Work, BMI, median), 
+             y = BMI, 
+             colour = Education:Work)) + 
   geom_boxplot() + 
   coord_flip() +
   guides(colour = FALSE) + 
-  labs(x = "Education X Working", y = "BMI", 
-       title = "Examining the effect of education level and employment \nstatus on BMI")
+  labs(title = "Examining the effect of education level and employment \nstatus on BMI",
+       x = "Education X Working", 
+       y = "BMI")
 ```
 
 As we've reordered based on the median BMI, it's a little hard to see any patterns as we have two factors involved in that reordering - Education and Work.  So let's simplify and look at Work status first (reordering on the basis of median BMI). We can see that the highest median BMI group are those looking for work (and the lowest those in work). 
@@ -215,12 +222,15 @@ As we've reordered based on the median BMI, it's a little hard to see any patter
 ```{r, warning=FALSE}
 NHANES_tidied %>% 
   filter(!is.na(Education) & !is.na(Work) & !is.na(BMI)) %>%
-  ggplot(aes(x = fct_reorder(Work, BMI, median), y = BMI, 
-              colour = Work)) + 
+  ggplot(aes(x = fct_reorder(Work, BMI, median), 
+             y = BMI, 
+             colour = Work)) + 
   geom_boxplot() + 
   coord_flip() +
   guides(colour = FALSE) + 
-  labs(x = "Working", y = "BMI", title = "Examining the effect of employment status on BMI")
+  labs(title = "Examining the effect of employment status on BMI",
+       x = "Working", 
+       y = "BMI")
 ```
 
 Now let's look at Education on BMI. Now we say that the lowest median BMI group are those who are college graduates.
@@ -228,18 +238,23 @@ Now let's look at Education on BMI. Now we say that the lowest median BMI group 
 ```{r, warning=FALSE}
 NHANES_tidied %>% 
   filter(!is.na(Education) & !is.na(Work) & !is.na(BMI)) %>%
-  ggplot(aes(x = fct_reorder(Education, BMI, median), y = BMI, 
-              colour = Education)) + 
+  ggplot(aes(x = fct_reorder(Education, BMI, median), 
+             y = BMI, 
+             colour = Education)) + 
   geom_boxplot() + 
   coord_flip() +
   guides(colour = FALSE) + 
-  labs(x = "Education", y = "BMI", title = "Examining the effect of education level on BMI")
+  labs(title = "Examining the effect of education level on BMI",
+       x = "Education",
+       y = "BMI")
 ```
 
 What about separate plots by race?  Let's first check how many values we have for the `Race1` variable.
 
 ```{r}
-unique(NHANES_tidied$Race1)
+NHANES_tidied %>%
+  select(Race1) %>%
+  distinct()
 ```
 
 OK, let's filter out the Other race category and plot BMI first as a function of Race. For the last bit of the filter we use the  operator `!=` which means "not equal to" - so the last bit of the filter expression means AND (&) Race1 is not equal to "Other".
@@ -247,10 +262,14 @@ OK, let's filter out the Other race category and plot BMI first as a function of
 ```{r, warning=FALSE}
 NHANES_tidied %>% 
   filter(!is.na(Education) & !is.na(Work) & !is.na(BMI) & Race1 != "Other") %>%
-  ggplot(aes(x = fct_reorder(Race1, BMI, median), y = BMI, colour = Race1)) +
+  ggplot(aes(x = fct_reorder(Race1, BMI, median), 
+             y = BMI, 
+             colour = Race1)) +
   geom_boxplot() + 
   guides(colour = FALSE) +
-  labs(x = "Race", y = "BMI", title = "Examining Race and BMI") 
+  labs(title = "Examining Race and BMI",
+       x = "Race", 
+       y = "BMI") 
 ```
 
 What else might influence BMI?  Instead of just looking at Race, might there be Gender differences?  Have a go yourself redoing the above but exploring the question of how Gender instead might interact with Education level and Employment status to influence BMI. What about looking at Race AND Gender together? You can do that by changing the last line of the code above to: `facet_wrap(~ Race1:Gender)`

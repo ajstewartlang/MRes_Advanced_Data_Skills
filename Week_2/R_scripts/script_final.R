@@ -111,11 +111,12 @@ starwars %>%
        y = "Count") +
   facet_wrap(~species)
 
-# Let's aggregate our filtered dataset working out the means and standard deviations
-# for each of our two groups (Humans vs. Droids).
-# We are piping the starwars data through to the group_by function
-# which is then grouping the data by species.  We are then piping this grouped data through to the
-# summarise() function which is calculating the mean and sd deviation for our height and mass variables.
+# Let's aggregate our filtered dataset working out the means and standard 
+# deviations for each of our two groups (Humans vs. Droids).
+# We start by piping the starwars data through to the group_by() function
+# which isgroups the data by species.  We then pipe this grouped data through 
+# to the summarise() function to calculate the mean and sd deviation for our 
+# height and mass variables.
 starwars %>%
   filter((species == "Human" | species == "Droid") & 
            (!is.na(height) & !is.na(mass))) %>%
@@ -123,8 +124,9 @@ starwars %>%
   summarise(mean_height = mean(height), sd_height = sd(height), 
             mean_mass = mean(mass), sd_mass = sd(mass))
 
-# We can do a basic plot of our means by species based on this new variable starwars_summary - 
-# Notice we use the geom_col() function to add a layer to our plot involve plotting a bar graph.
+# We can do a basic plot of our means by species
+# Notice we use the geom_col() function to add a layer to our plot involve 
+# plotting a bar graph.
 starwars %>%
   filter((species == "Human" | species == "Droid") & 
            (!is.na(height) & !is.na(mass))) %>%
