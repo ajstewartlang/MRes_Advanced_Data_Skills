@@ -1,16 +1,17 @@
 library(tidyverse)
 library(viridis)
 library(ggbeeswarm)
+library(ggthemes)
 
 # Data tidying and wrangling ####
 # Create data for 10,000 people - each with measures of Working Memory (WM), IQ, and 
 # reading Comprehension (Comp)
 
-data1 <- read_csv("https://bit.ly/2OTkuNz")
+data1 <- read_csv("https://bit.ly/31Te6HQ")
 
 # Create data for 48 participants (all present in data) taking part in an experiment
 
-dataRT <- read_csv("https://bit.ly/31xd6sG")
+dataRT <- read_csv("https://bit.ly/2ZflWOr")
 
 # Combine the data1 and dataRT datasets using the inner_join() function
 # Map this onto a new variable we're calling dataRT_all
@@ -35,7 +36,7 @@ data_long %>%
 # Recode one column capturing 2x2 and then splitting
 # First create the data set - 24 items each with one RT measure for each of 4 conditions
 
-my_data <- read_csv("https://bit.ly/2YYcP4B")
+my_data <- read_csv("https://bit.ly/2KPZEe9")
 my_data
 
 # Recode condition columns follows:
@@ -65,7 +66,6 @@ my_data %>%
   unite(col = "condition", c("prime", "target"), sep = "_") %>%
   spread(key = "condition", value = "rt")
 
-
 # Visualisation ####
 # Bar Graph
 data_summ <- data_long %>% group_by(condition) %>% summarise(Mean = mean(rt), sd = sd(rt))
@@ -79,7 +79,7 @@ ggplot(data_summ, aes (x = condition, y = Mean, group = condition,
 
 # When boxplots can mislead
 
-data2 <- read_csv("https://bit.ly/2YYr6dm")
+data2 <- read_csv("https://bit.ly/31UgcXT")
 
 ggplot(data2, aes(x = group, y = rt)) + geom_boxplot()
 ggplot(data2, aes(x = group, y = rt)) + geom_jitter(size = 2, width = .1, alpha = .25)
@@ -92,6 +92,70 @@ ggplot(data_long, aes(x = condition, y = rt, group = condition, fill = condition
   geom_jitter(alpha = .25, position = position_jitter(0.05)) + 
   guides(colour = FALSE, fill = FALSE) +
   stat_summary(fun.data = "mean_cl_boot", colour = "black", size = 1) 
+
+# Beeswarm plot
+ggplot(data_long, aes(x = condition, y = rt, group = condition, fill = condition)) + 
+  geom_beeswarm(alpha = .25) + 
+  guides(colour = FALSE, fill = FALSE) +
+  stat_summary(fun.data = "mean_cl_boot", colour = "black", size = 1) 
+
+data_long %>%
+  mutate(Condition = recode(condition, 
+                            "complex_sentence" = "Complex Sentence",
+                            "simple_sentence" = "Simple Sentence")) %>%
+  ggplot(aes(x = Condition, y = rt, group = Condition, fill = Condition)) + 
+  geom_beeswarm(alpha = .25) + 
+  guides(colour = FALSE, fill = FALSE) +
+  stat_summary(fun.data = "mean_cl_boot", colour = "black", size = 1) +
+  labs(title = "Plot of Reaction Time (ms.) by Condition",
+       x = "Condition", 
+       y = "Reaction Time (ms.)") +
+  theme(text = element_text(size = 15))
+
+# Five Thirty Eight theme
+data_long %>%
+  mutate(Condition = recode(condition, 
+                            "complex_sentence" = "Complex Sentence",
+                            "simple_sentence" = "Simple Sentence")) %>%
+  ggplot(aes(x = Condition, y = rt, group = Condition, fill = Condition)) + 
+  geom_beeswarm(alpha = .25) + 
+  guides(colour = FALSE, fill = FALSE) +
+  stat_summary(fun.data = "mean_cl_boot", colour = "black", size = 1) +
+  labs(title = "Plot of Reaction Time (ms.) by Condition",
+       x = "Condition", 
+       y = "Reaction Time (ms.)") +
+  theme_fivethirtyeight()
+
+# Economist theme
+data_long %>%
+  mutate(Condition = recode(condition, 
+                            "complex_sentence" = "Complex Sentence",
+                            "simple_sentence" = "Simple Sentence")) %>%
+  ggplot(aes(x = Condition, y = rt, group = Condition, fill = Condition)) + 
+  geom_beeswarm(alpha = .25) + 
+  guides(colour = FALSE, fill = FALSE) +
+  stat_summary(fun.data = "mean_cl_boot", colour = "black", size = 1) +
+  labs(title = "Plot of Reaction Time (ms.) by Condition",
+       x = "Condition", 
+       y = "Reaction Time (ms.)") +
+  theme_economist()
+
+my_plot <- data_long %>%
+  mutate(Condition = recode(condition, 
+                            "complex_sentence" = "Complex Sentence",
+                            "simple_sentence" = "Simple Sentence")) %>%
+  ggplot(aes(x = Condition, y = rt, group = Condition, fill = Condition)) + 
+  geom_beeswarm(alpha = .25) + 
+  guides(colour = FALSE, fill = FALSE) +
+  stat_summary(fun.data = "mean_cl_boot", colour = "black", size = 1) +
+  labs(title = "Plot of Reaction Time (ms.) by Condition",
+       x = "Condition", 
+       y = "Reaction Time (ms.)") +
+  theme_economist()
+  
+ggsave("my_plot.png", my_plot, height = 3, width = 5, units = "cm")
+
+
 
 # Raincloud plot on data 
 library(RColorBrewer)
@@ -283,4 +347,6 @@ p <- ggplot(df_Americas, aes(x = lifeExp, y = fct_reorder(country, lifeExp))) +
   ease_aes('linear')
 
 animate(p, height = 500, width = 900)
+
+
 
