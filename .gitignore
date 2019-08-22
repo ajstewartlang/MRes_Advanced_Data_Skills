@@ -38,3 +38,4 @@ vignettes/*.pdf
 # Ignore keynote versions of the slides
 /*/*.key
 
+.Rproj.user
