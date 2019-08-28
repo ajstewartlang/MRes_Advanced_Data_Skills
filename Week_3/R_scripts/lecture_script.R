@@ -7,11 +7,11 @@ library(ggthemes)
 # Create data for 10,000 people - each with measures of Working Memory (WM), IQ, and 
 # reading Comprehension (Comp)
 
-data1 <- read_csv("https://bit.ly/31Te6HQ")
+data1 <- read_csv("data_files/data1.csv")
 
 # Create data for 48 participants (all present in data) taking part in an experiment
 
-dataRT <- read_csv("https://bit.ly/2ZflWOr")
+dataRT <- read_csv("data_files/dataRT.csv")
 
 # Combine the data1 and dataRT datasets using the inner_join() function
 # Map this onto a new variable we're calling dataRT_all
@@ -36,7 +36,7 @@ data_long %>%
 # Recode one column capturing 2x2 and then splitting
 # First create the data set - 24 items each with one RT measure for each of 4 conditions
 
-my_data <- read_csv("https://bit.ly/2KPZEe9")
+my_data <- read_csv("data_files/my_data.csv")
 my_data
 
 # Recode condition columns follows:
@@ -79,7 +79,7 @@ ggplot(data_summ, aes (x = condition, y = Mean, group = condition,
 
 # When boxplots can mislead
 
-data2 <- read_csv("https://bit.ly/31UgcXT")
+data2 <- read_csv("data_files/data2.csv")
 
 ggplot(data2, aes(x = group, y = rt)) + geom_boxplot()
 ggplot(data2, aes(x = group, y = rt)) + geom_jitter(size = 2, width = .1, alpha = .25)

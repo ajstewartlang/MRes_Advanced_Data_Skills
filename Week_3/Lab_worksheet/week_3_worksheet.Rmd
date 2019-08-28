@@ -72,7 +72,6 @@ NHANES %>%
   n_distinct()
 ```
 
-
 We see we have 6,779 unique individuals.  Let's tidy our data to remove duplicate IDs. Note that below we're using the pipe operator `%>%`  You can read it as 'and then' so it means we're taking the NHANES dataset and then filtering it keep just rows with distinct ID numbers.  The pipe operator really helps with the readability of your data wrangling code and is an integral part of the tidyverse philosophy - tidy data and tidy code.
 
 ```{r}
