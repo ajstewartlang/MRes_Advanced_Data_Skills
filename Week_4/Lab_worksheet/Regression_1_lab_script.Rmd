@@ -1,7 +1,7 @@
 ---
 title: "Regression_1_lab_script"
 author: "Andrew Stewart"
-date: "05/10/2018"
+date: "28/08/2019"
 output: html_document
 ---
 
@@ -22,7 +22,7 @@ It is from Kaggle datasets:  https://www.kaggle.com/sandeep04201988/housing-pric
 We can use the function head() to display the first few rows of our dataset called "crime".
 
 ```{r, message=FALSE}
-crime <- read_csv("crime_dataset.csv")
+crime <- read_csv("../R_scripts/data_files/crime_dataset.csv")
 head(crime)
 ```
 
@@ -46,7 +46,9 @@ head(crime)
 We might first think that as population size increases, crime rate also increases.  Let's first build a scatter plot.
 
 ```{r, warning=FALSE}
-ggplot(crime, aes(x = Population, y = Violent_Crimes)) + geom_point() + geom_smooth(method = "lm")
+ggplot(crime, aes(x = Population, y = Violent_Crimes)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
 ```
 
 This plot looks pretty interesting.  How about calculating Pearson's r?
@@ -64,7 +66,9 @@ crime_filtered <- filter(crime, Population < 2000000)
 Now let's redo the plot:
 
 ```{r, warning=FALSE}
-ggplot(crime_filtered, aes(x = Population, y = Violent_Crimes)) + geom_point() + geom_smooth(method = "lm")
+ggplot(crime_filtered, aes(x = Population, y = Violent_Crimes)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
 ```
 
 And calculate Pearson's r.
@@ -85,7 +89,10 @@ Then we build a plot. I'm using the layer geom_text() to plot the City names and
 
 ```{r, warning=FALSE}
 ggplot(crime_filtered, aes(x = Population, y = Violent_Crimes, label = City)) + 
-  geom_point() + geom_text(nudge_y = 500, check_overlap = TRUE) + geom_smooth(method = "lm") + xlim(0,1800000)
+  geom_point() + 
+  geom_text(nudge_y = 500, check_overlap = TRUE) + 
+  geom_smooth(method = "lm") + 
+  xlim(0,1800000)
 ```
 
 This shows a clear positive linear relationship so let's work out Pearson's r.
