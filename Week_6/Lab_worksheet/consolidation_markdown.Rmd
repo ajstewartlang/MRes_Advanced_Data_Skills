@@ -1,0 +1,237 @@
+---
+title: "Consolidation lab"
+author: "Andrew Stewart"
+date: "28/08/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+This lab will run from 10-12 in the computer cluster on Nov 8th - Bo Yao will be on hand to assist.  I will be available on our Slack channel in case you need extra help.
+ 
+In this lab you'll have the chance to go over a number of things that we covered before reading week. We will focus on data subsetting, data visualisation, and building some linear models.
+
+We will be using two sets of packages - the `tidyverse` packages which includes `dplyr`, `ggplot2` etc. and the `gapminder` package which includes some nice global data related to population size, life expectancy, GDP etc for a bunch of countries over a number of years.
+
+First of all, load the `tidyverse` and `gapmiinder` packages to your library.  Remember, if you haven't installed either before, you'll need to first type `install.packages("packagename")` in the console.  Obviously, replace "packagename" with the name of the package you want to download!
+
+```{r, message=FALSE}
+library(tidyverse)
+library(gapminder)
+```
+
+Frist we're going to build a scatterplot of life expectancy against GDP per capita using the gapminder dataset.  If you want to explore the dataset before you use it you could type `>help(gapminder)` or  `>str(gapminder)`
+
+```{r}
+str(gapminder)
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) + 
+  geom_point() +
+  labs(title = "Scatterplot of Life Expectancy against GDP per capita",
+       x = "GDP per capita", 
+       y = "Life Expectancy (years)")
+```
+
+Now let's separate out the data by Contintent.
+
+```{r}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
+  geom_point() +
+  labs(title = "Scatterplot of Life Expectancy against GDP per capita by Continent",
+       x = "GDP per capita", 
+       y = "Life Expectancy (years)",
+       colour = "Continent")
+```
+
+We can also use `facet_wrap()` to split by Continent which might make things a little easier to see.
+
+```{r}
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
+  geom_point() + 
+  facet_wrap(~ continent) +
+  guides(colour = FALSE) +
+  labs(title = "Scatterplot of Life Expectancy against GDP per capita by Continent",
+       x = "GDP per capita", 
+       y = "Life Expectancy (years)",
+       colour = "Continent")  
+```
+
+Now we're going to focus on just one country, Sweden - famous for pop pioneers, Abba, and everyone's favourite progressive death metal band, Opeth.  No?  Just mine then...
+
+We will use the `filter()` function from the `dplyr` package to include only data from "Sweden" in our new variable I'm calling `gapminder_sub1`. 
+
+```{r}
+gapminder_sub1 <- filter(gapminder, country == "Sweden")
+```
+
+Let's plot a scatterplot of life expectancy against GDP and add a regression line.
+
+```{r}
+ggplot(gapminder_sub1, aes(x = gdpPercap, y = lifeExp)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") +
+  labs(title = "Sweden Life Expectancy by GDP",
+       x = "GDP per capita", 
+       y = "Life Expectancy (years)")
+```
+
+We can formally calculate the linear model using the `lm()` function.
+
+```{r}
+model <- lm(lifeExp ~ gdpPercap, data = gapminder_sub1)
+summary(model)
+```
+
+We can look at some diagnostic plots to make sure everything looks ok.
+
+```{r}
+plot(model)
+```
+
+Generally things look fine although point 12 is just outside .5 of Cook's distance.  Now we're going to do the same for the UK.
+
+```{r}
+gapminder_sub2 <- filter(gapminder, country == "United Kingdom")
+ggplot(gapminder_sub2, aes(x = gdpPercap, y = lifeExp)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") +
+  labs(title = "UK Life Expectancy by GDP",
+       x = "GDP per capita", 
+       y = "Life Expectancy (years)")
+
+model <- lm(lifeExp ~ gdpPercap, data = gapminder_sub2)
+summary(model)
+
+plot(model)
+```
+
+In this case, point 12 is looking a little extreme.
+
+Now, we're going to combine our two dataframes using the `rbind()` function. This function will take two separate dataframes and bind them together by rows (i.e., one on top of each other) to produce a new dataframe.  You can also combine two dataframes side by side by binding together by columns using the `cbind()` function.  Here we're sticking with `rbind()` and we're mapping the output of this onto a new variable I'm calling `data_combined`.
+
+```{r}
+data_combined <- rbind(gapminder_sub1, gapminder_sub2)
+```
+
+We're now going to produce a different kind of plot. We're going to build a violin plot showing the distribution of life expectancy data for our two countries.  We're also adding some descriptive statistics using the `stat_summary()` function - we're adding the mean and SE bars.
+
+```{r}
+ggplot(data_combined, aes(x = country, y = lifeExp, fill = country)) + 
+  geom_violin() + 
+  geom_jitter(width = .1, alpha = .3) + 
+  stat_summary(fun.data = mean_se, geom = "errorbar", width=.25) + 
+  stat_summary(fun.y = mean, geom = "point", size = 4) + 
+  guides(fill = FALSE)  +
+  labs(title = "Life Expectancy for Sweden and the United Kingdom",
+       x = "Country", 
+       y = "Life Expectancy (years)")
+```
+
+Now let's look at the countries in Europe using our `filter()` function again and life expectancy against GDP.
+
+Instead of creating temporary variables, we can use the pipe operator `%>%` (read as "and then") which
+allows us to filter the dataset before we pass it to `ggplot()`. In this case, we're selecting
+only the `Europe` continent in our dataset.
+
+```{r}
+gapminder %>% 
+  filter(continent == "Europe") %>%
+  ggplot(aes(x = gdpPercap, y = lifeExp)) + 
+  geom_point() +
+  labs(title = "Life Expectancy against GDP per capita \nfor countries in Europe",
+       x = "GDP per capita", 
+       y = "Life Expectancy (years)")
+```
+
+Now we're going to plot boxplots of the Life Expectacy data for all the countries in Europe. Notice how I'm using the `fct_reorder()` function to reorder the levels of our factor based on the median of each country's Life Expectancy data.
+
+```{r}
+gapminder %>% 
+  filter(continent == "Europe") %>%
+ggplot(aes(x = fct_reorder(country, lifeExp, median), y = lifeExp, fill = country)) + 
+  geom_boxplot() + 
+  coord_flip() + 
+  guides(fill = FALSE) + 
+  labs(title = "Boxplots of Life Expectancy in Countries in Europe over Time",
+       x = "Country",
+       y = "Life Expectancy (years)")
+```
+
+We're now going to look at a dataset built into the tidyverse - it's the diamonds dataset and contains the prices and other attributes of almost 54,000 diamonds.  Let's check the structure first using `str()`
+
+```{r}
+str(diamonds)
+```
+
+Let's first plot Price against Clarity while also capturing Carat. Remember the alpha parameter in the `geom_jitter()` layer sets the level of translucency of each point - it can vary from 0 to 1.  Change it from .1 to 1 to see what happens...
+
+```{r}
+ggplot(diamonds, aes(x = clarity, y = price, colour = carat)) + 
+  geom_jitter(alpha = .1) + 
+  labs(x = "Clarity (Worst to Best)", 
+       y = "Price in USD", 
+       colour = "Carat") 
+```
+
+Now let's plot a histogram of diamond prices.
+
+```{r}
+ggplot(diamonds, aes(x = price)) + 
+  geom_histogram(bins = 50) + 
+  labs(title = "Histogram of Diamond Prices", 
+       x = "Price in USD")
+```
+
+We're now going to look at histogrames of diamond prices separately for each type of diamond 'cut'.  Notice we're also plotting in grey the histogram of the overall dataset.  For the first `geom_histogram()` call we've using a filtered version of our dataset using the `select()` function to allow us to plot this background. The `-` means we're dropping the variable `cut` from the dataset `diamonds`. The next `geom_histogram()` call uses the unfiltered dataset inherited from ealier in the pipe - we then `facet_wrap()` by the variable labelled `cut`.
+
+```{r}
+diamonds %>%
+  ggplot(aes(x = price)) + 
+  geom_histogram(data = select(diamonds, -cut), bins = 50, fill = "grey") + 
+  geom_histogram(bins = 50) + 
+  facet_wrap(~ cut) + 
+  labs(title = "Histograms of Diamond Prices Faceted by Diamond Cut",
+       x = "Price in USD")
+```
+
+Now let's look at the whole data set again with Price plotted against type of diamond 'cut'. We're also adding some descriptive statistics using the `stat_summary()` function.
+
+```{r}
+diamonds %>%
+  ggplot(aes(x = cut, y = price, colour = carat)) + 
+  geom_jitter(alpha = .1) +
+  stat_summary(fun.data = mean_cl_boot, colour="red") +
+  labs(x = "Diamond Cut", y = "Price in USD", colour="Carat") 
+```
+
+Let's work out some descriptives ourselves using `group_by()` and `summarise()` from the dplyr package, alongside a bit of piping %>%.  We're working out (grouped by cut) the mean and standard deviations for price and carat.
+
+```{r}
+diamonds %>% 
+  group_by(cut) %>% 
+  summarise(mean_price = mean(price), sd_price = sd(price), count = n(), mean_carat = mean(carat),
+            sd_carat = sd(carat))
+```
+
+Let's choose a mid-ranking clarity level and smaller diamonds (< .5 carats).  We use the `filter()` function to do that.  Can a diamond's price be predicted by its carat level?
+
+```{r}
+diamonds %>% 
+  filter(clarity == "VS2" & carat < .5) %>%
+  ggplot(aes(x = carat, y = price)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") +
+  labs(title = "Price in USD against Carats for \nMid-Range Clarity Small Diamonds",
+       x = "Carats", 
+       y = "Price in USD")
+```
+
+The graph certainly suggests we can predict price if we know a diamond's carat level. Is this supported by a linear model?
+
+```{r}
+model <- lm(price ~ carat, data = diamonds)
+summary(model)
+plot(model)
+```
+
+Looks like we have a pretty nice fitting model with only one or two outliers.
