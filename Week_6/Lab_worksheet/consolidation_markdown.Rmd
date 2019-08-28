@@ -229,7 +229,7 @@ diamonds %>%
 The graph certainly suggests we can predict price if we know a diamond's carat level. Is this supported by a linear model?
 
 ```{r}
-model <- lm(price ~ carat, data = diamonds)
+model <- lm(price ~ carat, data = filter(diamonds, clarity == "VS2" & carat < .5))
 summary(model)
 plot(model)
 ```
