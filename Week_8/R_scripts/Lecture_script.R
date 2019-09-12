@@ -1,8 +1,6 @@
 # We'll start by loading the packages we need.
 
 library(tidyverse) #load the tidyverse packages
-library(psych) #load the psych packages for generating descriptives
-library(yarrr) #load yarr for pirate plots
 library(afex) #load afex for running factorial ANOVA
 library(DescTools) #load DescTools for calculating effect sizes
 library(emmeans) #load emmeans for running pairwise comparisons

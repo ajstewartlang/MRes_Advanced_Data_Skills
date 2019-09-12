@@ -311,7 +311,7 @@ anova(model3, model0)</code></pre>
 <pre class="r"><code>model0 &lt;- lm(corr_spell ~ 1, data = MRes_tut2)
 model1 &lt;- lm(corr_spell ~ age + std_RA + std_SPELL, data = MRes_tut2)</code></pre>
 <p>Let’s do stepwise forwards:</p>
-<pre class="r"><code>steplimitsf &lt;- step(model0, scope=list (lower = model0, upper = model1), direction = &quot;forward&quot;)</code></pre>
+<pre class="r"><code>steplimitsf &lt;- step(model0, scope = list (lower = model0, upper = model1), direction = &quot;forward&quot;)</code></pre>
 <pre><code>## Start:  AIC=291.98
 ## corr_spell ~ 1
 ## 

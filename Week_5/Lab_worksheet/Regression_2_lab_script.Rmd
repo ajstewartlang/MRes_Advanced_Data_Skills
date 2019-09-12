@@ -129,7 +129,7 @@ model1 <- lm(corr_spell ~ age + std_RA + std_SPELL, data = MRes_tut2)
 Let's do stepwise forwards:
 
 ```{r}
-steplimitsf <- step(model0, scope=list (lower = model0, upper = model1), direction = "forward")
+steplimitsf <- step(model0, scope = list (lower = model0, upper = model1), direction = "forward")
 summary(steplimitsf)
 ```
 
