@@ -70,9 +70,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type="text/css">
 .main-container {
@@ -97,22 +95,92 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
 
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
 });
 </script>
 
 <!-- code folding -->
 
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -122,8 +190,8 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">ANOVA_part_1_lab_script_questions</h1>
-<h4 class="author"><em>Andrew Stewart</em></h4>
-<h4 class="date"><em>15/11/2018</em></h4>
+<h4 class="author">Andrew Stewart</h4>
+<h4 class="date">14/11/2019</h4>
 
 </div>
 
@@ -134,11 +202,11 @@ $(document).ready(function () {
 </div>
 <div id="question-2" class="section level2">
 <h2>Question 2</h2>
-<p>Our second datafile is called ANOVA_lab1_data2.csv. These data are also from a rection time experiment but with a slightly more complex design. 48 participants responded to a word that differed in how frequent it was. This factor is between participants and we have four levels coded as ‘very low’, ‘low’, ‘high’, and ‘very high’. Our DV is reaction time and is coded as ‘RT’. Subject number is coded as ‘Subject’. We want to tell if there is a difference between our conditions (and if so, where that difference lies). Remember to build a data visualisation first.</p>
+<p>Our second datafile is called ANOVA_lab1_data2.csv. These data are also from a rection time experiment but with a slightly more complex design. 48 participants responded to a word that differed in how frequent it was. This factor is between participants and we have four levels coded as ‘very low’, ‘low’, ‘high’, and ‘very high’. Our DV is reaction time and is coded as ‘RT’. Subject number is coded as ‘Subject’. We want to know if there is a difference between our conditions (and if so, where that difference lies).</p>
 </div>
 <div id="question-3" class="section level2">
 <h2>Question 3</h2>
-<p>Our third datafile is called ANOVA_lab1_data3.csv. These data are from a 2 x 2 repeated measures reaction time experiment. We were interested in how quickly participants could respond to images that were Large vs. Small and in Colour vs. B &amp; W. We expect that Large Colour images will be responded to more quickly than Small B &amp; W images. We’re not sure about Small Colour images and Large B &amp; W images. We measured the response times of 24 participants responding to an image in each of these four conditions. We want to tell if there is a difference between our conditions (and if so, where that difference lies). Remember to build a data visualisation first.</p>
+<p>Our third datafile is called ANOVA_lab1_data3.csv. These data are from a 2 x 2 repeated measures reaction time experiment. We were interested in how quickly participants could respond to images that were Large vs. Small and in Colour vs. Black &amp; Wwhite. We expect that Large Colour images will be responded to more quickly than Small B &amp; W images. We’re not sure about Small Colour images and Large B &amp; W images. We measured the response times of 24 participants responding to an image in each of these four conditions. We want to determine if there is a difference between our conditions (and if so, where that difference lies).</p>
 </div>
 
 
