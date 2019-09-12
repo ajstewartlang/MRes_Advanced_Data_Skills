@@ -8,9 +8,8 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-This lab will run from 10-12 in the computer cluster on Nov 8th - Bo Yao will be on hand to assist.  I will be available on our Slack channel in case you need extra help.
- 
-In this lab you'll have the chance to go over a number of things that we covered before reading week. We will focus on data subsetting, data visualisation, and building some linear models.
+
+ In this lab you'll have the chance to go over a number of things that we covered before reading week. We will focus on data subsetting, data visualisation, and building some linear models.
 
 We will be using two sets of packages - the `tidyverse` packages which includes `dplyr`, `ggplot2` etc. and the `gapminder` package which includes some nice global data related to population size, life expectancy, GDP etc for a bunch of countries over a number of years.
 
