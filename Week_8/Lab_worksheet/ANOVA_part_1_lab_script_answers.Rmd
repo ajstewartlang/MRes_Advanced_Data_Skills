@@ -1,0 +1,178 @@
+---
+title: "ANOVA_part_1_lab_script_answers"
+author: "Andrew Stewart"
+date: "15/11/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+First we need to load the packages we'll be using - these are the tidyverse, afex (for factorial ANOVA), emmeans (for running pairwise comparisons), and psych (for generating descriptive statistics.)
+
+```{r, message=FALSE}
+library(tidyverse)
+library(afex)
+library(emmeans)
+library(psych)
+```
+
+## Question 1
+
+Now you need to load our first data file.  This is called ANOVA_lab1_data1.csv - when you load it, you need to assign it to a new variable called 'data'. Load it using the 'Import Dataset' button in the Environment window of RStudio.
+
+```{r, message=FALSE}
+data <- read_csv("ANOVA_lab1_data1.csv")
+```
+
+24 participants responded to a word that was either common (i.e., high lexical frequency) or rare (i.e., low lexical frequency).  This is our IV and is coded as 'High' vs. 'Low'.  Our DV is reaction time and is coded as 'RT'. Subject number is coded as 'Subject'. We want to know whether there is a difference between conditions (and if so, where that difference lies). Visualise the data, generate descrtiptives, and run the appropriate ANOVA to determine whether our independent variable (Condition) has an influence on our dependent variable (RT).
+
+If you type 'data' you will see the first 10 rows of our dataframe..
+
+```{r}
+data
+```
+
+We need to set our Condition column to a factor.
+
+```{r}
+data$Condition <- as.factor(data$Condition)
+```
+
+We are first going to plot the data using ggplot - we'll used both geom_violin() and geom_jitter() layers - this way we'll be able to see both the distribution shapes, and also the raw data (but jittered so we don't have lots of points basically on top of each other). We're also going to add some summary statistics using the stat_summary function - specifically we're asking for each condition mean plus the 95% confidence interval around each condition mean to be plotted.
+
+```{r}
+ggplot(data, aes(x=Condition, y=RT, fill=Condition)) + geom_violin() + 
+  geom_jitter(width=.1, alpha=.5) + stat_summary(fun.data="mean_cl_boot") + guides(fill=FALSE)
+```
+
+We're now going to generate some descriptives.  First we will generate them using the describeBy() function in the psych package, and they we're going to do it tidyverse-style.  
+
+```{r}
+describeBy(data$RT, group=data$Condition)
+```
+
+Note, we are using the pipe operator %>% which allows us to 'pipe' values from left to right.  The following could be read as 'take the dataframe called data, pass it along to the funciton group_by() and group our data by condition, pass this grouped data along to the summarise function and give me the mean and SD of the RT values for each group'.
+
+```{r}
+data %>% group_by(Condition) %>% summarise(mean(RT), sd(RT))
+```
+
+We're now going to build our ANOVA model.  This is a simple between subjects design do we can use the inbuilt aov() function. We are going to map the output to a variable we're calling 'model'.
+
+```{r}
+model <- aov(RT ~ Condition, data)
+```
+
+We can now ask for a summary of our model in ANOVA table format using the anova() function.
+
+```{r}
+anova(model)
+```
+
+To interpret our output, we don't need any further comparisons.  Can you think why this is?
+
+## Question 2
+
+Our second datafile is called ANOVA_lab1_data2.csv.  Load it and map it onto a variable called 'data'.
+
+```{r, message=FALSE}
+data <- read_csv("ANOVA_lab1_data2.csv")
+```
+
+These data are also from a rection time experiment but with a slightly more complex design.  48 participants responded to a word that differed in how frequent it was.  This factor is between participants and we have four levels coded as 'very low', 'low', 'high', and 'very high'.  Our DV is reaction time and is coded as 'RT'. Subject number is coded as 'Subject'. We want to tell if there is a difference between our conditions (and if so, where that difference lies). 
+
+We need to set our Condition column to a factor.
+
+```{r}
+data$Condition <- as.factor(data$Condition)
+```
+
+Let's plot the data...
+
+```{r}
+ggplot(data, aes(x=Condition, y=RT, fill=Condition)) + geom_violin() + 
+  geom_jitter(width=.1, alpha=.5) + stat_summary(fun.data="mean_cl_boot") + guides(fill=FALSE)
+```
+
+Note that it might be better to swap around the order of the factors in our plot.  We can do that using the factor() function. Let's reorder...
+
+```{r}
+data$Condition <- factor(data$Condition, levels=c("very low", "low", "high", "very high"))
+```
+
+```{r}
+ggplot(data, aes(x=Condition, y=RT, fill=Condition)) + geom_violin() + 
+  geom_jitter(width=.1, alpha=.5) + stat_summary(fun.data="mean_cl_boot") + guides(fill=FALSE)
+```
+
+This graph looks better.
+
+Now let's generate some descriptives using describeBy and using tidyverse.
+
+```{r}
+describeBy(data$RT, group=data$Condition)
+data %>% group_by(Condition) %>% summarise (mean(RT), sd(RT))
+```
+
+Finally, let's build our model. Again it is a between subjects design with one factor so we can just use the inbuilt aov() function.
+
+```{r}
+model <- aov(RT ~ Condition, data)
+anova(model)
+```
+
+Let's interpret the main effect using the emmeans() function and correcting for multiple comparisons using the Bonferroni correction.
+
+```{r}
+emmeans(model, pairwise ~ Condition, adjust="Bonferroni")
+```
+
+## Question 3
+
+Open the datafile ANOVA_lab1_data3.csv and map it onto the variable 'data'.
+
+```{r, message=FALSE}
+data <- read_csv("ANOVA_lab1_data3.csv")
+```
+
+These data are from a 2 x 2 repeated measures reaction time experiment.  We were interested in how quickly participants could respond to images that were Large vs. Small and in Colour vs. B & W.  We expect that Large Colour images will be responded to more quickly than Small B & W images.  We're not sure about Small Colour images and Large B & W images.  We measured the response times of 24 participants responding to an image in each of these four conditions.  We want to tell if there is a difference between our conditions (and if so, where that difference lies).  
+
+We need to set the two columns (Size and Colour) as factors.
+
+```{r}
+data$Size <- as.factor(data$Size)
+data$Colour <- as.factor(data$Colour)
+```
+
+First let's plot (and roll)...
+
+```{r}
+ggplot(data, aes(x=Size:Colour, y=RT, fill=Size:Colour)) + geom_violin() + 
+  geom_jitter(width=.1, alpha=.5) + stat_summary(fun.data="mean_cl_boot", colour="black") + 
+  guides(fill=FALSE) + labs(x="Condition", y="RT (ms.)", title="Violin Plot of Reaction Time (ms.) by Condition\nwith Means and 95% Confidence Intervals") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Now we're going to generate some descriptives.
+
+```{r}
+describeBy(data$RT, group=list(data$Size, data$Colour))
+data %>% group_by(Size, Colour) %>% summarise(mean(RT), sd(RT))
+```
+
+As it is a factorial design we will build our ANOVA model using the aov_4() function in the afex package.  The term (1+Size*Colour|Subject) corresponds to our two repeated measures factors and the fact we're aggregating over our Subjects (this will make more sense when we move onto mixed models using the lme4 package next semester...)
+
+```{r}
+model <- aov_4(RT ~ Size*Colour + (1+Size*Colour|Subject), data)
+summary(model)
+```
+
+Our interaction is significant so we run pairwise comparisons to determine where our difference(s) is/are...
+
+```{r}
+emmeans(model, pairwise ~ Size*Colour, adjust="Bonferroni")
+```
+
+Even with the conservative Bonferroni adjustment, you'll see that every condition differs from every other condition. 

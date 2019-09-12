@@ -1,7 +1,7 @@
 ---
 title: "Regression 2 Lab Script"
 author: "Andrew Stewart"
-date: "28/08/2019"
+date: "24/10/2019"
 output: html_document
 ---
 
@@ -24,6 +24,7 @@ library(tidyverse) # Load the tidyverse packages
 library(Hmisc) # Needed for correlation
 library(MASS) # Needed for maths functions
 library(car) # Needed for VIF calculation
+library(olsrr) # Needed for stepwise via p 
 ```
 
 You now need to read in the data file - if you can't remember the path of where it is save, click on the 'Import Dataset' icon in the top right pane of R Studio.  Make sure your data is assigned to the variable MRes_tut2 (which it should be automatically).
@@ -54,7 +55,7 @@ ggplot(MRes_tut2, aes(x = std_SPELL, y = corr_spell)) +
 
 Note the fact that chronological age does not seem to correlate with our outcome variable - we'll return to this later...
 
-We are going to do hierarchical regression first - we'll build one model (which we'll call model0) that is the mean of our outcome variable, and another model (model1) which contains all our predictors:
+We are going to do hierarchical regression first - we'll build one model (which we'll call `model0`) that is the mean of our outcome variable, and another model (`model1`) which contains all our predictors:
 
 ```{r}
 model0 <- lm(corr_spell ~ 1, data = MRes_tut2)
@@ -73,13 +74,13 @@ OK, so they differ - now let's plot information about model fit - remember, we a
 plot(model1)
 ```
 
-The errors looks fairly equally distributed along our fitted values (homoscedasticity) - although a little worse for high fitted values - and from the Q-Q plot we can tell they look fairly normal (they should follow the diagonal).  How about influential cases?  So, Case 10 looks a bit dodgy - it has a high Cook's Distance value - which suggests it is having a disproportionate effect on our model.  Let's exclude it using the filter() function - the symbol != means 'does not equal' so we are selecting values other than Case 10.  
+The errors looks fairly equally distributed along our fitted values (homoscedasticity) - although a little worse for high fitted values - and from the Q-Q plot we can tell they look fairly normal (they should follow the diagonal).  How about influential cases?  So, Case 10 looks a bit dodgy - it has a high Cook's Distance value - which suggests it is having a disproportionate effect on our model.  Let's exclude it using the `filter()` function - the symbol `!=` means 'does not equal' so we are selecting values other than Case 10.  
 
 ```{r}
 MRes_tut2 <- filter(MRes_tut2, case != "10")
 ```
 
-We now create another model (model2) which doesn't include Case 10.
+We now create another model (`model2`) which doesn't include Case 10.
 
 ```{r}
 model2 <- lm(corr_spell ~ age + RA + std_RA + std_SPELL, data = MRes_tut2)
@@ -91,13 +92,13 @@ Now, let's check for multicollinearity measured by VIF:
 vif(model2)
 ```
 
-It looks like RA and std_RA are problematic.  We can look at the correlation between them using the rcorr function:
+It looks like RA and std_RA are problematic.  We can look at the correlation between them using the `rcorr()` function:
 
 ```{r}
 rcorr(MRes_tut2$RA, MRes_tut2$std_RA)
 ```
 
-The correlation is pretty high (0.68), so let's exclude the predictor with the highest VIF value (which is RA) and build a new model:
+The correlation is pretty high (0.88), so let's exclude the predictor with the highest VIF value (which is RA) and build a new model:
 
 ```{r}
 model3 <- lm(corr_spell ~ age + std_RA + std_SPELL, data = MRes_tut2)
@@ -114,7 +115,7 @@ anova(model3, model0)
 
 We'd write our equation as something like:
 
-Spelled correct = -209.44 + 1.10(age) + 0.38(std_RA) + 1.21(std_SPELL) + residual
+`Spelled correct = -209.44 + 1.10(age) + 0.38(std_RA) + 1.21(std_SPELL) + residual`
 
 #2. Statistical regression
 
@@ -125,7 +126,7 @@ model0 <- lm(corr_spell ~ 1, data = MRes_tut2)
 model1 <- lm(corr_spell ~ age + std_RA + std_SPELL, data = MRes_tut2)
 ```
 
-Let's do Stepwise forwards:
+Let's do stepwise forwards:
 
 ```{r}
 steplimitsf <- step(model0, scope=list (lower = model0, upper = model1), direction = "forward")
@@ -148,32 +149,29 @@ summary(steplimitsboth)
 
 You'll see that the same final model is arrived it in each case. We have three significant predictors.
 
-We can also use the stepAIC function - it will produce the same result as using the step function (as the step function bases model selection on AIC rather than F-ratio improvement). Step is actually a slightly simplified version of the stepAIC function.
+We can also use the `ols_step_forward_p()` function from the package `olsrr` - this works by finding the best model by entering the predictors based on their p values.  There are other methods within the `olsrr` package.  To see them, type `olsrr::` into the console window.
 
 ```{r}
-stepAICmodel <- stepAIC(model1, scope = model1, scale = 0,
-        direction = "both",
-        trace = 1, keep = NULL, steps = 1000,
-        k = 2)
-summary(stepAICmodel)
+pmodel <- ols_step_forward_p(model1)
+summary(pmodel)
 ```
 
-In this case, the model with the lowest AIC value is also the one arrived at statisically via the sequential procedure - but this may not always be the case.
+In this case, the model with the lowest AIC value is also the one arrived at statisically via the sequential procedure based on p-values - but this may not always be the case.
 
 If you look back to the initial plots we did, you might have noticed that chronological age did not seem to correlate with our outcome measure.  Perhaps chronological age is acting as a suppressor - let's build a model without it.
 
 ```{r}
-modelx <- lm (corr_spell ~ std_RA + std_SPELL, data = MRes_tut2)
+modelx <- lm(corr_spell ~ std_RA + std_SPELL, data = MRes_tut2)
 
 AIC(modelx)
-AIC(stepAICmodel)
+AIC(model1)
 ```
 
 On an AIC basis the model with chronological age is a better model - if chronological age is acting as a supressor, then we might expect the effect of standardised reading age to be reduced when chronological age is left out.  Looking at the parameters for the two models, we see this is the case. The aspects of reading age that are not captured by chronological age are therefore important for our outcome.
 
 ```{r}
 summary(modelx)
-summary(stepAICmodel)
+summary(model1)
 ```
 
 We would also expect chronological age and standardised reading age to be correlated - are they?
