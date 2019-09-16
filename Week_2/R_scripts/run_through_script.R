@@ -179,5 +179,5 @@ starwars %>%
        y = "Height (cm)") +
   guides(colour = FALSE)
  
-# Now can you redo the code from line 52 but this time do everything for the
+# Now can you redo the code from line 51 but this time do everything for the
 # mass variable instead of height?
