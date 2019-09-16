@@ -17,17 +17,18 @@ If this is your first time using RStudio, remember to check the Preferences wind
 ![](image1.png) 
 <br>
 <br>
-Before you start, remember to make a new project file - call it something like "week3".  Save the project folder somewhere sensible (maybe create a new folder called something like
+Before you start, remember to make a new project file - call it something like "week_3".  Save the project folder somewhere sensible (maybe create a new folder called something like
 R analyses) - the script that you write and any data that you save or want to import should be in the folder associated with your project.  
 <br>
 <br>
 ![](image2.png) 
 <br>
 <br>
-We're going to use a couple of packages - the Tidyverse packages, the new gganimate package, and the NHANES package (which contains the NHANES dataset you're going to use).  If you haven't used or installed these packages yet, you need to do that first by typing into the console:
+We're going to use a couple of packages - the Tidyverse packages, the gganimate package, and the NHANES package (which contains the NHANES dataset you're going to use).  If you haven't used or installed these packages yet, you need to do that first by typing into the console:
 
 ```{r, eval=FALSE}
 install.packages("tidyverse")
+install.packages("gganimate")
 install.packages("NHANES")
 ```
 
@@ -274,3 +275,51 @@ NHANES_tidied %>%
 What else might influence BMI?  Instead of just looking at Race, might there be Gender differences?  Have a go yourself redoing the above but exploring the question of how Gender instead might interact with Education level and Employment status to influence BMI. What about looking at Race AND Gender together? You can do that by changing the last line of the code above to: `facet_wrap(~ Race1:Gender)`
 
 What else might be worth exploring in the NHANES dataset?
+
+Finally, we're going to create some animated graphs using the gganimate package. 
+
+```{r, eval=FALSE}
+install.packages("gganimate")
+```
+
+```{r}
+library(gganimate)
+```
+
+You might also need to install the gifski and png packages if you haven't done so:
+
+```{r, eval=FALSE}
+install.packages("gifski")
+install.packages("png")
+```
+
+First we're going to plot some histograms of BMI animated by age decade. We use the `transition_states()` function to define the operation of our animate with the `ease_aes()` function defining how we transtition from one frame to the next.
+
+```{r}
+NHANES_tidied %>%
+  filter(!is.na(BMI) & !is.na(AgeDecade)) %>%
+  ggplot(aes(x = BMI)) + 
+  geom_histogram(bins = 100) +
+  transition_states(AgeDecade, transition_length = 2, state_length = 2) +
+  ease_aes("linear") + 
+  labs(title = "Age decade: {closest_state}")
+```
+
+Now we're going to plot some BMI by Education level violin and box plots animated by Race. 
+
+```{r}
+NHANES_tidied %>% 
+  filter(!is.na(Education) & !is.na(BMI)) %>%
+  group_by(Education) %>% 
+  ggplot(aes(x = fct_reorder(Education, BMI, median), y = BMI, colour = Education)) +
+  geom_violin() +
+  geom_boxplot(alpha = .5) +
+  guides(colour = FALSE) + 
+  labs(title = "Examining the effect of education level on median BMI for Race = {closest_state}",
+       x = "Education Level", 
+       y = "BMI") +
+  transition_states(Race1, transition_length = 2, state_length = 2) +
+  ease_aes("linear") 
+```
+
+These graphs are great as they can be saved as animated gif files and then used in presentations. To save the last animated plot you built, you can use the `anim_save()` function such as `> anim_save(filename = "my_plot.gif")`
