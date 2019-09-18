@@ -1,4 +1,4 @@
-# MRes Advanced Data Skills
+# MRes Advanced Data Skills, Open Science, and Reproducibility (BIOL63101)
  
 Email: _Andrew.Stewart@manchester.ac.uk_ <br>
 Twitter: _@ajstewart_lang_ <br>
