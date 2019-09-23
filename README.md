@@ -5,7 +5,7 @@ Twitter: _@ajstewart_lang_ <br>
 
 Slides for my 2019/20 MRes Data Skills unit.  Click on the __'Clone or download'__ button in the top right to download a zipped version of this repository.
 
-The first class is September 26th, 1000-1200. Ellen Wilkinson Building room B3.17. __NOTE THIS MAY CHANGE SO CHECK BACK ON 25/09__
+The first class is September 26th, 1000-1200. Ellen Wilkinson Building room B3.17. __NOTE THIS LOCATION MAY CHANGE SO CHECK BACK ON 25/09__
 
 Each folder contains the slides in .pdf format, the R script that goes with those slides, and the lab worksheet as an .html file.  All data files for the lectures and the lab classes are included.  To view the .html file, you might need to first download it and then open it within your browser - ensure it has .html at the end of the file name when you save it. 
 
