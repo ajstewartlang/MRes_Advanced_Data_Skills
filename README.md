@@ -22,5 +22,5 @@ Week 07 - 07/11 - Consolidation Lab - Stopford PC Cluster 2 Bay A<br>
 Week 08 - 14/11 - General Linear Model - ANOVA - Ellen Wilkinson B3.17<br>
 Week 09 - 21/11 - General Linear Model - ANOVA  - Stopford PC Cluster 2 Bay A<br>
 Week 10 - 28/11 - Tidy Thursday Data Wrangling & Visualisation Challenge - Stopford PC Cluster 1<br>
-Week 11 - 05/12 - Reproducing your Computational Environment using Binder - Stopford PC Cluster 1<br>
+Week 11 - 05/12 - Reproducing your Computational Environment Using Binder - Stopford PC Cluster 1<br>
 Week 12 - 12/12 - Dynamic, Reproducible Presentations Using `xaringan` - Stopford PC Cluster 1<br>
