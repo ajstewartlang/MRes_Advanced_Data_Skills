@@ -4,6 +4,7 @@
 # type:
 # install.packages("tidyverse")  
 # install.packages("viridis")
+
 library(tidyverse)
 library(viridis)
 
@@ -92,7 +93,7 @@ starwars %>%
   ggplot(aes(x = height)) + 
   geom_histogram()
 
-# We can now add another layer involving a title and labels
+# We can now add a title and labels
 starwars %>%
   ggplot(aes(x = height)) + 
   geom_histogram() +
@@ -201,5 +202,5 @@ starwars %>%
        y = "Height (cm)") +
   guides(colour = FALSE)
  
-# Now can you redo the code from line 51 but this time do everything for the
+# Now can you redo the code from line 73 but this time do everything for the
 # mass variable instead of height?
