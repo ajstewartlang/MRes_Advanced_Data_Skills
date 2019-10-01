@@ -23,14 +23,36 @@ starwars %>%
 
 # Note this is the same as
 select(starwars, name)
-
 # But by using the pipe we can build up a sequence of functions as we'll see 
 # below.
+
 # The tally() function tells us how many elements are
 starwars %>% 
   tally()
 
-# This displays just the column called "homeworld" in the dataset - you'll see 
+# We can add a group_by() so before the tally() is called, we have
+# a grouping by homeworld. The tally is then done within those groups.
+starwars %>%
+  group_by(homeworld) %>%
+  tally()
+
+# If we want to order from the highest number of occurrences to the lowest
+# we can use the sort parameter.
+
+starwars %>%
+  group_by(homeworld) %>%
+  tally(sort = TRUE)
+
+# We can check what other parameters the tally() function can take by typing
+# either:
+
+help(tally)
+
+# or
+
+?tally
+
+# The following displays just the column called "homeworld" in the dataset - you'll see 
 # lots of missing data that is indicated by "NA"
 starwars %>%
   select(homeworld) %>%
