@@ -19,7 +19,7 @@ Week 04 - 17/10 - General Linear Model - Regression - Stopford PC Cluster 1<br>
 Week 05 - 24/10 - General Linear Model - Regression - Stopford PC Cluster 1<br>
 Week 06 - 31/10 - No Timetabled Lecture - Reading Week <br>
 Week 07 - 07/11 - Consolidation Lab - Stopford PC Cluster 2 Bay A<br>
-Week 08 - 14/11 - General Linear Model - ANOVA -  Stopford PC Cluster 2 Bay A<br>
+Week 08 - 14/11 - General Linear Model - ANOVA -  Stopford PC Cluster 1<br>
 Week 09 - 21/11 - General Linear Model - ANOVA  - Stopford PC Cluster 2 Bay A<br>
 Week 10 - 28/11 - Tidy Thursday Data Wrangling & Visualisation Challenge - Stopford PC Cluster 1<br>
 Week 11 - 05/12 - Reproducing your Computational Environment Using Binder - Ellen Wilkinson B3.17<br>
