@@ -141,7 +141,7 @@ emmeans(model, pairwise ~ Condition, adjust = "Bonferroni")
 ```
 ## Question 3
 
-These data are from a 2 x 2 repeated measures reaction time experiment.  We were interested in how quickly participants could respond to images that were Large vs. Small and in Colour vs. Black & Wwhite.  We expect that Large Colour images will be responded to more quickly than Small B & W images.  We're not sure about Small Colour images and Large B & W images.  We measured the response times of 24 participants responding to an image in each of these four conditions.  We want to determine if there is a difference between our conditions (and if so, where that difference lies).
+These data are from a 2 x 2 repeated measures reaction time experiment.  We were interested in how quickly participants could respond to images that were Large vs. Small and in Colour vs. Black & White.  We expect that Large Colour images will be responded to more quickly than Small B & W images.  We're not sure about Small Colour images and Large B & W images.  We measured the response times of 24 participants responding to an image in each of these four conditions.  We want to determine if there is a difference between our conditions (and if so, where that difference lies).
 
 Load the third datafile and map it onto the variable `my_data3`.
 

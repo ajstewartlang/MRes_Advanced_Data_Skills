@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Andrew Stewart" />
@@ -84,7 +85,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -158,18 +158,6 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
@@ -206,7 +194,7 @@ $(document).ready(function () {
 </div>
 <div id="question-3" class="section level2">
 <h2>Question 3</h2>
-<p>Our third datafile is called ANOVA_lab1_data3.csv. These data are from a 2 x 2 repeated measures reaction time experiment. We were interested in how quickly participants could respond to images that were Large vs. Small and in Colour vs. Black &amp; Wwhite. We expect that Large Colour images will be responded to more quickly than Small B &amp; W images. We’re not sure about Small Colour images and Large B &amp; W images. We measured the response times of 24 participants responding to an image in each of these four conditions. We want to determine if there is a difference between our conditions (and if so, where that difference lies).</p>
+<p>Our third datafile is called ANOVA_lab1_data3.csv. These data are from a 2 x 2 repeated measures reaction time experiment. We were interested in how quickly participants could respond to images that were Large vs. Small and in Colour vs. Black &amp; White. We expect that Large Colour images will be responded to more quickly than Small B &amp; W images. We’re not sure about Small Colour images and Large B &amp; W images. We measured the response times of 24 participants responding to an image in each of these four conditions. We want to determine if there is a difference between our conditions (and if so, where that difference lies).</p>
 </div>
 
 
@@ -226,6 +214,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
