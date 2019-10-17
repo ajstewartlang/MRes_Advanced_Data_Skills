@@ -7,9 +7,11 @@ Slides for my 2019/20 MRes Data Skills unit.  Click on the __'Clone or download'
 
 The first class is September 26th, 1000-1200. We're now in Ellen Wilkinson B3.17 for the rest of the unit.
 
-Sign up for our Open Science Working Group email list here: https://listserv.manchester.ac.uk/cgi-bin/wa?SUBED1=open_research&A=1
+Sign up for our Open Science Working Group email list [here](https://listserv.manchester.ac.uk/cgi-bin/wa?SUBED1=open_research&A=1).
 
 Each folder contains the slides in .pdf format, the R script that goes with those slides, and the lab worksheet as an .html file.  All data files for the lectures and the lab classes are included.  To view the .html file, you might need to first download it and then open it within your browser - ensure it has .html at the end of the file name when you save it. 
+
+Your assignments need to generated using R Markdown. I have put together a brief video tutorial on how to do this [here](https://youtu.be/CBJjxS-UopA).
 
 __Schedule__<br>
 Week 01 - 26/09 - Introduction, Open Science, and Power - Ellen Wilkinson B3.17<br>
