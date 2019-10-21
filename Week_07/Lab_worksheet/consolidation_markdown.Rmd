@@ -9,18 +9,88 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-In this lab you'll have the chance to go over a number of things that we covered before reading week. We will focus on data subsetting, data visualisation, and building some linear models.
+In this lab you'll have the chance to go over a number of things that we covered before reading week. We will focus on data wrangling, data subsetting, data visualisation, and building some linear models.
 
 We will be using two sets of packages - the `tidyverse` packages which includes `dplyr`, `ggplot2` etc. and the `gapminder` package which includes some nice global data related to population size, life expectancy, GDP etc for a bunch of countries over a number of years.
 
-First of all, load the `tidyverse` and `gapmiinder` packages to your library.  Remember, if you haven't installed either before, you'll need to first type `install.packages("packagename")` in the console.  Obviously, replace "packagename" with the name of the package you want to download!
+First of all, load the `tidyverse` packages.  Remember, if you haven't installed either before, you'll need to first type `install.packages("packagename")` in the console.  Obviously, replace "packagename" with the name of the package you want to download!
 
 ```{r, message=FALSE}
 library(tidyverse)
+```
+
+First we're going to look at joining together two datasets. This is the code from the Week 3 lecture where we habd two datasets - one (called `data1.csv` contains dta for 10,000 people - each with measures of Working Memory (WM), IQ, and reading Comprehension (Comp)).  The second (called `dataRT.csv`) contains the reading time data for 48 of these 10,000 people. The reading time measures are associated with reading Complex and Simple sentences.
+
+We begin by reading in the data...
+
+```{r, message=FALSE}
+data1 <- read_csv("data_files/data1.csv")
+
+dataRT <- read_csv("data_files/dataRT.csv")
+```
+
+Let's look at the first 6 rows of each dataframe using the `head()` function. 
+
+```{r}
+head(data1)
+```
+
+```{r}
+head(dataRT)
+```
+
+To find out how big each dataset is, we can use the `str()` function.
+
+```{r}
+str(data1)
+```
+
+```{r}
+str(dataRT)
+```
+
+You'll see that the column `id` is common to the two dataframes - participant `1138` in `data1` is the same participant referred to as `1138` in `dataRT`. 
+
+We can join the two datafiles together matched by `id` so we end up with one datafile of 48 individuals with their individual difference measures and their reading times. We assign this to a new variable we're calling `dataRT_all`
+
+```{r}
+dataRT_all <- inner_join(data1, dataRT, by = "id")
+```
+
+We're now going to use the mutate function to create two new columns - one corresponding to the log of the Simple reading time condition, and the other to the log of the Complex reading time condition. We map this onto a new variable we're calling `data_transformed`.
+
+```{r}
+data_transformed <- mutate(dataRT_all, log_simple = log(simple_sentence), 
+                            log_complex = log(complex_sentence))
+```
+
+We can inspect the first 6 elements of this new dataframe by using the `head()` function.
+
+```{r}
+head(data_transformed)
+```
+
+We can then re-shape the data from wide to long format using the `gather()` function - we map this onto a new variable we're calling `data_long`.
+
+```{r}
+data_long <- gather(dataRT, "condition", "rt", c("simple_sentence", "complex_sentence"))
+```
+
+Let's look at the first 6 rows...
+
+```{r}
+head(data_long)
+```
+
+OK, so now we've had a go at joining two datasets and then re-shaping the resulting dataset from wide to long format. 
+
+Let's move onto the next activity. We're going to use the `gapminder` dataset. 
+
+```{r}
 library(gapminder)
 ```
 
-Frist we're going to build a scatterplot of life expectancy against GDP per capita using the gapminder dataset.  If you want to explore the dataset before you use it you could type `>help(gapminder)` or  `>str(gapminder)`
+First we're going to build a scatterplot of life expectancy against GDP per capita using the gapminder dataset.  If you want to explore the dataset before you use it you could type `>help(gapminder)` or  `>str(gapminder)`
 
 ```{r}
 str(gapminder)
