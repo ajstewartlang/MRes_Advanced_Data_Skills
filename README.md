@@ -13,6 +13,8 @@ Each folder contains the slides in .pdf format, the R script that goes with thos
 
 Your assignments need to generated using R Markdown. I have put together a brief video tutorial on how to do this [here](https://youtu.be/CBJjxS-UopA).
 
+To join the University of Manchester R Users Group, subscribe to the mailing list https://listserv.manchester.ac.uk/cgi-bin/wa?A0=RUM or send an email to LISTSERV@listserv.manchester.ac.uk with no subject and the body SUBSCRIBE RUM Your Name.
+
 __Schedule__<br>
 Week 01 - 26/09 - Introduction, Open Science, and Power - Ellen Wilkinson B3.17<br>
 Week 02 - 03/10 - Introduction to R  - Ellen Wilkinson B3.17<br>
