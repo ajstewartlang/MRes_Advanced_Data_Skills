@@ -123,7 +123,7 @@ summary(steplimitsboth)
 pmodel <- ols_step_forward_p(model1)
 pmodel
 
-leapsmodels <- regsubsets (House_price ~ Population + Crime + Average_age + 
+leapsmodels <- regsubsets(House_price ~ Population + Crime + Average_age + 
                              Household_income, data = my_data)
 plot(leapsmodels, scale = "adjr2", main = "Models")
 
