@@ -37,14 +37,15 @@ while (!(result1$p.value < .01 & result2$p.value < .01)) {
   i <- i+1
 }
 
-my_data <- as.tibble(cbind(Region, as.integer(House_price), as.integer(Population), 
+my_data <- as_tibble(cbind(Region, as.integer(House_price), as.integer(Population), 
                         as.integer(Crime), Average_age, Household_income))
 
 colnames(my_data) <- c("Region", "House_price", "Population", "Crime", "Average_age", "Household_income")
 #write.csv(data, "Mult_regression.csv")
 # Check the correlation structure
 
-cor(my_data)
+# We need to drop Region from the correlation grid as it is a factor
+cor(dplyr::select(my_data, -Region))
 
 my_data <- read_csv("data_files/Mult_regression.csv")
 
@@ -73,7 +74,9 @@ rcorr(my_data$House_price, my_data$Crime)
 rcorr(my_data$House_price, my_data$Average_age)
 rcorr(my_data$House_price, my_data$Household_income)
 
-corr <- cor(my_data)
+# We need to drop Region from the correlation grid as it is a factor - we also 
+# column X1 as it is a repeat of the Region information (and is a factor)
+corr <- cor(dplyr::select(my_data, -Region, -X1))
 
 ggcorrplot(corr , hc.order = TRUE, type = "lower",
            lab = TRUE)
