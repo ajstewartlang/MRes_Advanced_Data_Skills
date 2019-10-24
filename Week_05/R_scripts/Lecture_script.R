@@ -116,7 +116,7 @@ plot(model2)
 durbinWatsonTest(model2)
 
 # Now let's do some stepwise regression to see what we end up with
-steplimitsboth <- step(model0, scope = list (upper = model1), direction = "both")
+steplimitsboth <- step(model0, scope = list(upper = model1), direction = "both")
 
 summary(steplimitsboth)
 
