@@ -7,15 +7,11 @@ Slides for my 2019/20 MRes Data Skills unit.  Click on the __'Clone or download'
 
 The first class is September 26th, 1000-1200. We're now in Ellen Wilkinson B3.17 for the rest of the unit.
 
-Sign up for our Open Science Working Group email list [here](https://listserv.manchester.ac.uk/cgi-bin/wa?SUBED1=open_research&A=1).
-
 Each folder contains the slides in .pdf format, the R script that goes with those slides, and the lab worksheet as an .html file.  All data files for the lectures and the lab classes are included.  To view the .html file, you might need to first download it and then open it within your browser - ensure it has .html at the end of the file name when you save it. 
 
 Your assignments need to generated using R Markdown. I have put together a brief video tutorial on how to do this [here](https://youtu.be/CBJjxS-UopA).
 
-To join the University of Manchester R User Group, subscribe to the mailing list https://listserv.manchester.ac.uk/cgi-bin/wa?A0=RUM or send an email to LISTSERV@listserv.manchester.ac.uk with no subject and the body SUBSCRIBE RUM Your Name.
-
-__Schedule__<br>
+## Schedule
 Week 01 - 26/09 - Introduction, Open Science, and Power - Ellen Wilkinson B3.17<br>
 Week 02 - 03/10 - Introduction to R  - Ellen Wilkinson B3.17<br>
 Week 03 - 10/10 - Data Wrangling and Visualisation - Ellen Wilkinson B3.17<br>
@@ -28,3 +24,9 @@ Week 09 - 21/11 - General Linear Model - ANOVA  - Ellen Wilkinson B3.17<br>
 Week 10 - 28/11 - Tidy Thursday Data Wrangling & Visualisation Challenge - Ellen Wilkinson B3.17<br>
 Week 11 - 05/12 - Reproducing your Computational Environment Using Binder - Ellen Wilkinson B3.17<br>
 Week 12 - 12/12 - Dynamic, Reproducible Presentations Using `xaringan` - Ellen Wilkinson B3.17<br>
+
+## Open Research Working Group
+Sign up for our Open Science Working Group email list [here](https://listserv.manchester.ac.uk/cgi-bin/wa?SUBED1=open_research&A=1).
+
+## RUM User Group
+To join the University of Manchester R User Group, subscribe to the mailing list https://listserv.manchester.ac.uk/cgi-bin/wa?A0=RUM or send an email to LISTSERV@listserv.manchester.ac.uk with no subject and the body SUBSCRIBE RUM Your Name.
