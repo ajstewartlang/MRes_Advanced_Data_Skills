@@ -15,12 +15,12 @@ Your assignments need to generated using R Markdown. I have put together a brief
 Week 01 - 26/09 - Introduction, Open Science, and Power - Ellen Wilkinson B3.17<br>
 Week 02 - 03/10 - Introduction to R  - Ellen Wilkinson B3.17<br>
 Week 03 - 10/10 - Data Wrangling and Visualisation - Ellen Wilkinson B3.17<br>
-Week 04 - 17/10 - General Linear Model - Regression - Ellen Wilkinson B3.17<br>
-Week 05 - 24/10 - General Linear Model - Regression - Ellen Wilkinson B3.17<br>
+Week 04 - 17/10 - GLM - Regression - Ellen Wilkinson B3.17<br>
+Week 05 - 24/10 - GLM - Regression - Ellen Wilkinson B3.17<br>
 Week 06 - 31/10 - No Timetabled Lecture - Reading Week <br>
 Week 07 - 07/11 - Consolidation Lab - Ellen Wilkinson B3.17<br>
-Week 08 - 14/11 - General Linear Model - ANOVA -  Ellen Wilkinson B3.17<br>
-Week 09 - 21/11 - General Linear Model - ANOVA  - Ellen Wilkinson B3.17<br>
+Week 08 - 14/11 - GLM - ANOVA - Ellen Wilkinson B3.17<br>
+Week 09 - 21/11 - GLM - ANOVA - Ellen Wilkinson B3.17<br>
 Week 10 - 28/11 - Tidy Thursday Data Wrangling & Visualisation Challenge - Ellen Wilkinson B3.17<br>
 Week 11 - 05/12 - Reproducing your Computational Environment Using Binder - Ellen Wilkinson B3.17<br>
 Week 12 - 12/12 - Dynamic, Reproducible Presentations Using `xaringan` - Ellen Wilkinson B3.17<br>
