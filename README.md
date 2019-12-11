@@ -9,7 +9,7 @@ The first class is September 26th, 1000-1200. We're now in Ellen Wilkinson B3.17
 
 Each folder contains the slides in .pdf format, the R script that goes with those slides, and the lab worksheet as an .html file.  All data files for the lectures and the lab classes are included.  To view the .html file, you might need to first download it and then open it within your browser - ensure it has .html at the end of the file name when you save it. 
 
-Your assignments need to generated using R Markdown. I have put together a brief video tutorial on how to do this [here](https://youtu.be/CBJjxS-UopA).
+Your assignments need to be generated using R Markdown. I have put together a brief video tutorial on how to do this [here](https://youtu.be/CBJjxS-UopA).
 
 ## Schedule
 Week 01 - 26/09 - Introduction, Open Science, and Power - Ellen Wilkinson B3.17<br>
