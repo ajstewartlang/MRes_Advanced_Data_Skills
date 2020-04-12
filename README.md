@@ -29,4 +29,4 @@ Week 12 - 12/12 - Dynamic, Reproducible Presentations Using `xaringan` - Ellen W
 Sign up for our Open Science Working Group email list [here](https://listserv.manchester.ac.uk/cgi-bin/wa?SUBED1=open_research&A=1).
 
 ## RUM User Group
-To join the University of Manchester R User Group, subscribe to the mailing list https://listserv.manchester.ac.uk/cgi-bin/wa?A0=RUM or send an email to LISTSERV@listserv.manchester.ac.uk with no subject and the body SUBSCRIBE RUM Your Name.
+To join the University of Manchester R User Group, subscribe to the [mailing list](https://listserv.manchester.ac.uk/cgi-bin/wa?A0=RUM) or send an email to LISTSERV@listserv.manchester.ac.uk with no subject and the body SUBSCRIBE RUM Your Name.
