@@ -15,7 +15,7 @@ Your assignments need to be generated using R Markdown. I have put together a br
 Week 01 - 26/09 - Introduction, Open Science, and Power - Ellen Wilkinson B3.17<br>
 Week 02 - 03/10 - Introduction to R  - Ellen Wilkinson B3.17<br>
 Week 03 - 10/10 - Data Wrangling and Visualisation - Ellen Wilkinson B3.17 [Worksheet](https://ajstewartlang.github.io/MRes_Advanced_Data_Skills/Week_03/Lab_worksheet/week_3_worksheet.html)<br>
-Week 04 - 17/10 - GLM - Regression - Ellen Wilkinson B3.17 [Worksheet](https://ajstewartlang.github.io/MRes_Advanced_Data_Skills/Week_04/Lab_worksheet/week_4_worksheet.html)<br>
+Week 04 - 17/10 - GLM - Regression - Ellen Wilkinson B3.17 [Worksheet](https://ajstewartlang.github.io/MRes_Advanced_Data_Skills/Week_04/Lab_worksheet/Regression_1_lab_script.html)<br>
 Week 05 - 24/10 - GLM - Regression - Ellen Wilkinson B3.17 [Worksheet](https://ajstewartlang.github.io/MRes_Advanced_Data_Skills/Week_05/Lab_worksheet/week_5_worksheet.html)<br>
 Week 06 - 31/10 - No Timetabled Lecture - Reading Week <br>
 Week 07 - 07/11 - Consolidation Lab - Ellen Wilkinson B3.17 [Worksheet](https://ajstewartlang.github.io/MRes_Advanced_Data_Skills/Week_07/Lab_worksheet/week_7_worksheet.html)<br>
