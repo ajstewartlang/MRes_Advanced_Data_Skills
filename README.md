@@ -14,16 +14,16 @@ Your assignments need to be generated using R Markdown. I have put together a br
 ## Schedule
 Week 01 - 26/09 - Introduction, Open Science, and Power - Ellen Wilkinson B3.17<br>
 Week 02 - 03/10 - Introduction to R  - Ellen Wilkinson B3.17<br>
-Week 03 - 10/10 - Data Wrangling and Visualisation - Ellen Wilkinson B3.17<br>
-Week 04 - 17/10 - GLM - Regression - Ellen Wilkinson B3.17<br>
-Week 05 - 24/10 - GLM - Regression - Ellen Wilkinson B3.17<br>
+Week 03 - 10/10 - Data Wrangling and Visualisation - Ellen Wilkinson B3.17 [Worksheet](https://ajstewartlang.github.io/MRes_Advanced_Data_Skills/Week_03/Lab_worksheet/week_3_worksheet.html)<br>
+Week 04 - 17/10 - GLM - Regression - Ellen Wilkinson B3.17 [Worksheet](https://ajstewartlang.github.io/MRes_Advanced_Data_Skills/Week_04/Lab_worksheet/week_4_worksheet.html)<br>
+Week 05 - 24/10 - GLM - Regression - Ellen Wilkinson B3.17 [Worksheet](https://ajstewartlang.github.io/MRes_Advanced_Data_Skills/Week_05/Lab_worksheet/week_5_worksheet.html)<br>
 Week 06 - 31/10 - No Timetabled Lecture - Reading Week <br>
-Week 07 - 07/11 - Consolidation Lab - Ellen Wilkinson B3.17<br>
-Week 08 - 14/11 - GLM - ANOVA - Ellen Wilkinson B3.17<br>
-Week 09 - 21/11 - GLM - ANOVA - Ellen Wilkinson B3.17<br>
-Week 10 - 28/11 - Tidy Thursday Data Wrangling & Visualisation Challenge - Ellen Wilkinson B3.17<br>
-Week 11 - 05/12 - Reproducing your Computational Environment Using Binder - Ellen Wilkinson B3.17<br>
-Week 12 - 12/12 - Dynamic, Reproducible Presentations Using `xaringan` - Ellen Wilkinson B3.17<br>
+Week 07 - 07/11 - Consolidation Lab - Ellen Wilkinson B3.17 [Worksheet](https://ajstewartlang.github.io/MRes_Advanced_Data_Skills/Week_07/Lab_worksheet/week_7_worksheet.html)<br>
+Week 08 - 14/11 - GLM - ANOVA - Ellen Wilkinson B3.17 [Worksheet](https://ajstewartlang.github.io/MRes_Advanced_Data_Skills/Week_08/Lab_worksheet/week_8_worksheet.html)<br>
+Week 09 - 21/11 - GLM - ANOVA - Ellen Wilkinson B3.17 [Worksheet](https://ajstewartlang.github.io/MRes_Advanced_Data_Skills/Week_09/Lab_worksheet/week_9_worksheet.html)<br>
+Week 10 - 28/11 - Tidy Thursday Data Wrangling & Visualisation Challenge - Ellen Wilkinson B3.17[Worksheet](https://ajstewartlang.github.io/MRes_Advanced_Data_Skills/Week_10/Lab_worksheet/week_10_worksheet.html) <br>
+Week 11 - 05/12 - Reproducing your Computational Environment Using Binder - Ellen Wilkinson B3.17 [Worksheet](https://ajstewartlang.github.io/MRes_Advanced_Data_Skills/Week_11/Lab_worksheet/week_11_worksheet.html)<br>
+Week 12 - 12/12 - Dynamic, Reproducible Presentations Using `xaringan` - Ellen Wilkinson B3.17 [Worksheet](https://ajstewartlang.github.io/MRes_Advanced_Data_Skills/Week_12/Lab_worksheet/week_12_worksheet.html)<br>
 
 ## Open Research Working Group
 Sign up for our Open Science Working Group email list [here](https://listserv.manchester.ac.uk/cgi-bin/wa?SUBED1=open_research&A=1).
