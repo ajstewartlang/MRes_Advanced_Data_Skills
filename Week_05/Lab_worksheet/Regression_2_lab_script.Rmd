@@ -1,15 +1,18 @@
 ---
 title: "Regression 2 Lab Script"
 author: "Andrew Stewart"
-date: "24/10/2019"
-output: html_document
+date: ""
+output: 
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#1. Multiple Regression (Standard Method)
+# Multiple Regression 
 
 In standard multiple regression all the independent variables (IVs) are entered into the equation and evaluated for their contribution at the same time. Let’s work through a specific example.
 
@@ -25,6 +28,7 @@ library(Hmisc) # Needed for correlation
 library(MASS) # Needed for maths functions
 library(car) # Needed for VIF calculation
 library(olsrr) # Needed for stepwise via p 
+library(performance) # Needed to check model assumptions
 ```
 
 You now need to read in the data file - if you can't remember the path of where it is save, click on the 'Import Dataset' icon in the top right pane of R Studio.  Make sure your data is assigned to the variable MRes_tut2 (which it should be automatically).
@@ -70,23 +74,29 @@ anova(model0, model1)
 
 OK, so they differ - now let's plot information about model fit - remember, we are particularly interested in Cook's distance values for our case...
 
-```{r}
-plot(model1)
+```{r, warning=FALSE, message=FALSE}
+check_model(model1)
 ```
 
 The errors looks fairly equally distributed along our fitted values (homoscedasticity) - although a little worse for high fitted values - and from the Q-Q plot we can tell they look fairly normal (they should follow the diagonal).  How about influential cases?  So, Case 10 looks a bit dodgy - it has a high Cook's Distance value - which suggests it is having a disproportionate effect on our model.  Let's exclude it using the `filter()` function - the symbol `!=` means 'does not equal' so we are selecting values other than Case 10.  
 
 ```{r}
-MRes_tut2 <- filter(MRes_tut2, case != "10")
+MRes_tut2_drop10 <- filter(MRes_tut2, case != "10")
 ```
 
 We now create another model (`model2`) which doesn't include Case 10.
 
 ```{r}
-model2 <- lm(corr_spell ~ age + RA + std_RA + std_SPELL, data = MRes_tut2)
+model2 <- lm(corr_spell ~ age + RA + std_RA + std_SPELL, data = MRes_tut2_drop10)
 ```
 
-Now, let's check for multicollinearity measured by VIF:
+Let's check the model assumptions again using `check_model()`.
+
+```{r, warning=FALSE, message=FALSE}
+check_model(model2)
+```
+
+Now, let's look at the multicollinearity values measured by VIF:
 
 ```{r}
 vif(model2)
@@ -95,21 +105,27 @@ vif(model2)
 It looks like RA and std_RA are problematic.  We can look at the correlation between them using the `rcorr()` function:
 
 ```{r}
-rcorr(MRes_tut2$RA, MRes_tut2$std_RA)
+rcorr(MRes_tut2_drop10$RA, MRes_tut2_drop10$std_RA)
 ```
 
 The correlation is pretty high (0.88), so let's exclude the predictor with the highest VIF value (which is RA) and build a new model:
 
 ```{r}
-model3 <- lm(corr_spell ~ age + std_RA + std_SPELL, data = MRes_tut2)
+model3 <- lm(corr_spell ~ age + std_RA + std_SPELL, data = MRes_tut2_drop10)
 vif(model3)
 ```
 
-These values look ok now. Let's generate the coefficients as this looks like a sensible model.
+These values look ok now. Let's check the model assumptions again.
+
+```{r, warning=FALSE, message=FALSE}
+check_model(model3)
+```
+
+Now let's generate the coefficients as this looks like a sensible model.
 
 ```{r}
 summary(model3)
-model0 <- lm(corr_spell ~ 1, data = MRes_tut2)
+model0 <- lm(corr_spell ~ 1, data = MRes_tut2_drop10)
 anova(model3, model0)
 ```
 
@@ -117,13 +133,13 @@ We'd write our equation as something like:
 
 `Spelled correct = -209.44 + 1.10(age) + 0.38(std_RA) + 1.21(std_SPELL) + residual`
 
-#2. Statistical regression
+# Statistical regression
 
 We can also do stepwise regression - forwards is when you start with the null model and predictors are added until they don't explain any more variance, backwards is when you start with the full model and remove predictors until removal starts affecting your model's predictive ability. Let's keep case 10 dropped and also drop the high VIF predictor (RA). This is handy for models with lots of predictors where the order in sequential regression is not obvious. 
 
 ```{r}
-model0 <- lm(corr_spell ~ 1, data = MRes_tut2)
-model1 <- lm(corr_spell ~ age + std_RA + std_SPELL, data = MRes_tut2)
+model0 <- lm(corr_spell ~ 1, data = MRes_tut2_drop10)
+model1 <- lm(corr_spell ~ age + std_RA + std_SPELL, data = MRes_tut2_drop10)
 ```
 
 Let's do stepwise forwards:
@@ -161,7 +177,7 @@ In this case, the model with the lowest AIC value is also the one arrived at sta
 If you look back to the initial plots we did, you might have noticed that chronological age did not seem to correlate with our outcome measure.  Perhaps chronological age is acting as a suppressor - let's build a model without it.
 
 ```{r}
-modelx <- lm(corr_spell ~ std_RA + std_SPELL, data = MRes_tut2)
+modelx <- lm(corr_spell ~ std_RA + std_SPELL, data = MRes_tut2_drop10)
 
 AIC(modelx)
 AIC(model1)

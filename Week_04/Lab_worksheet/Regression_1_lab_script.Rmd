@@ -1,19 +1,21 @@
 ---
-title: "Regression_1_lab_script"
+title: "Regression 1 lab"
 author: "Andrew Stewart"
-date: "17/10/2019"
-output: html_document
+date: ""
+output: 
+  html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-First we need to install the packages we need.  We're going to install the `tidyverse` packages plus a few others. The package `Hmisc` allows us to use the `rcorr()` function for calculating Pearson's r.  Remember, if you haven't previously installed these packages on your laptop you first need to type `install.packages("packagename")` in the console before you can call the `library()` function for that package.
+First we need to install the packages we need.  We're going to install the `tidyverse` packages plus a few others. The package `Hmisc` allows us to use the `rcorr()` function for calculating Pearson's r, and the `Performance` package so we can test our model assumptions.  Remember, if you haven't previously installed these packages on your laptop you first need to type `install.packages("packagename")` in the console before you can call the `library()` function for that package.
 
 ```{r, message=FALSE}
 library(tidyverse)
 library(Hmisc)
+library(performance)
 ```
 
 Import the dataset called `crime_dataset.csv` - this dataset contains population data, housing price index data and crime data for cities in the US.
@@ -36,11 +38,14 @@ crime <- separate(crime, 'City, State', into=c("City", "State"))
 head(crime)
 ```
 
-Now let's rename the columns to change the name of the "index_nsa" column (which is column 2) to "House_price" and get rid of the space in the "Violent Crimes" heading (which is column 6).  See how the output of `head(crime)` has changed again?
+Now let's rename the columns to change the name of the "index_nsa" column to "House_price" and get rid of the space in the "Violent Crimes" heading.  See how the output of `head(crime)` has changed again?
 
 ```{r}
-colnames(crime)[2] <- "House_price"
-colnames(crime)[6] <- "Violent_Crimes"
+crime <- crime %>%
+  rename(House_price = index_nsa) %>%
+  rename(Violent_Crimes = "Violent Crimes")
+#colnames(crime)[2] <- "House_price"
+#colnames(crime)[6] <- "Violent_Crimes"
 head(crime)
 ```
 
@@ -114,7 +119,13 @@ model1 <- lm(Violent_Crimes ~ 1, data = crime_filtered)
 model2 <- lm(Violent_Crimes ~ Population, data = crime_filtered)
 ```
 
-Let's use the `anova()` function to see if our model with Population as the predictor is better than the one using just the mean.
+Let's use the `check_model()` function to check the assumptions of our model.
+
+```{r, warning=FALSE, message=FALSE}
+check_model(model2)
+```
+
+Note, we'll come back to the influential outlier (case 29) later - but for now let's use the `anova()` function to see if our model with Population as the predictor is better than the one using just the mean.
 
 ```{r}
 anova(model1, model2)
@@ -130,7 +141,7 @@ The intercept corresponds to where our regression line intercepts the y-axis, an
 
 For a city with a population of about a million, there will be about 7907 Violent Crimes. We calculate this by multiplying the estimate of our predictor (0.006963) by 1,000,000 and
 then adding the intercept (944.3).  This gives us 7907.3 crimes - which tallys with what you
-see in our regression line above. We may have a few outliers.
+see in our regression line above. We may have a few outliers - how would you figure out what those were? Try excluding any outliers you find and re-building your model.
 
 You now have three tasks:<br>
 1. Check whether the same relationship holds for population size and robberies in 2015.<br>

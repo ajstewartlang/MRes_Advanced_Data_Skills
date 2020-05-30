@@ -1,5 +1,6 @@
 library(tidyverse)
 library(Hmisc) # Needed for correlation
+library(performance) # Needed to check model assumptions
 
 covary <- read_csv("data_files/covary.csv")
 
@@ -33,3 +34,8 @@ anova(model0, model1)
 
 # Now let's get some parameter estimates
 summary(model1)
+
+# We can use the check_model() function from the performance package to
+# check our model assumptions
+
+check_model(model1)

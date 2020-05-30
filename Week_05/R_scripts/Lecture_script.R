@@ -88,6 +88,9 @@ model0 <- lm(House_price ~ 1, data = my_data)
 model1 <- lm(House_price ~ Population + Crime + Average_age + Household_income, 
              data = my_data)
 
+# Let's check the model assumptions
+check_model(model1)
+
 # Do we have any multi-colinearity issues?
 vif(model1)
 
@@ -100,6 +103,8 @@ summary(model1)
 # Notice that Average_age and Household_income do not seem to predict house prices
 # Let's drop them in model2
 model2 <- lm(House_price ~ Population + Crime, data = my_data)
+
+check_model(model2)
 
 # Is model2 now better model1?
 anova(model2, model1)
